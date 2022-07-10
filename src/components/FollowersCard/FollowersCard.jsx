@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './FollowersCard.css'
 import { getAllUser } from '../../api/UserRequest'
 import User from '../User/User'
-import { useDispatch , useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 const FollowersCard = () => {
     const [persons, setPersons] = useState([])
