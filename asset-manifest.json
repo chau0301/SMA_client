@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/SMA_React/static/css/main.df81aa8b.css",
+    "main.js": "/SMA_React/static/js/main.f47f08f2.js",
+    "index.html": "/SMA_React/index.html",
+    "main.df81aa8b.css.map": "/SMA_React/static/css/main.df81aa8b.css.map",
+    "main.f47f08f2.js.map": "/SMA_React/static/js/main.f47f08f2.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.df81aa8b.css",
+    "static/js/main.f47f08f2.js"
+  ]
+}
