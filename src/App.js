@@ -18,7 +18,6 @@ function App() {
           <Route path = '/home' element = {user ? <Home/> : <Navigate to = "../auth"/>} />
           <Route path = '/auth' element = {user ? <Navigate to = "../home"/> : <Auth/>} />
           <Route path = '/profile/:id' element = {user ? <Profile/> : <Navigate to = "../auth"/>} />
-
         </Routes>
     </div>
   );
