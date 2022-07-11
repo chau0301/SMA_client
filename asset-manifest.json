@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/SMA_client/static/css/main.df81aa8b.css",
-    "main.js": "/SMA_client/static/js/main.d21b6bf3.js",
+    "main.js": "/SMA_client/static/js/main.f038cc08.js",
     "index.html": "/SMA_client/index.html",
     "main.df81aa8b.css.map": "/SMA_client/static/css/main.df81aa8b.css.map",
-    "main.d21b6bf3.js.map": "/SMA_client/static/js/main.d21b6bf3.js.map"
+    "main.f038cc08.js.map": "/SMA_client/static/js/main.f038cc08.js.map"
   },
   "entrypoints": [
     "static/css/main.df81aa8b.css",
-    "static/js/main.d21b6bf3.js"
+    "static/js/main.f038cc08.js"
   ]
 }
