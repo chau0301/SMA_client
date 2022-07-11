@@ -17,7 +17,7 @@ function App() {
         <div className="blur" style={{top: '36%', left: '-8rem'}}></div>
         <Routes>
         SMA_React
-          <Route path = '/SMA_React' element = {user ? <Navigate to = "/"/> : <Navigate to = "/"/>} />
+          <Route path = '/SMA_client' element = {user ? <Navigate to = "/"/> : <Navigate to = "/"/>} />
           <Route path = '/' element = {user ? <Navigate to = "home"/> : <Navigate to = "auth"/>} />
           <Route path = '/home' element = {user ? <Home/> : <Navigate to = "../auth"/>} />
           <Route path = '/auth' element = {user ? <Navigate to = "../home"/> : <Auth/>} />
