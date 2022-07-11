@@ -4,8 +4,12 @@ import Home from "./pages/home/Home";
 import Profile from "./pages/Profile/Profile";
 import {Routes, Route, Navigate} from 'react-router-dom'
 import { useSelector } from "react-redux";
+import {useEffect} from 'react'
 
 function App() {
+  useEffect(() => {
+    document.title = 'Social Media App'
+  })
   const user = useSelector((state) => state.authReducer.authData)
   return (
     <div className="App">
