@@ -7,11 +7,14 @@ import { useSelector } from "react-redux";
 import {useEffect} from 'react'
 import { useLocation } from 'react-router-dom'
 function App() {
-  useEffect(() => {
-    document.title = 'Social Media App'
-  })
-  const location = useLocation();
-  console.log(location.pathname);
+  //log the path
+  // useEffect(() => {
+  //   document.title = 'Social Media App'
+  // })
+  // const location = useLocation();
+  // console.log(location.pathname);
+
+
   const user = useSelector((state) => state.authReducer.authData)
   return (
     <div className="App">

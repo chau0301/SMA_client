@@ -19,7 +19,7 @@ const Posts = () => {
     <div className="Posts">
       {loading
         ? <div style={{textAlign: 'center'}}>Loading...</div>
-        : (posts.map((post, id) => <Post data={post} id={id}/>))}
+        : (posts.map((post, id) => <Post data={post} id={id} key={id}/>))}
     </div>
   )
 }
