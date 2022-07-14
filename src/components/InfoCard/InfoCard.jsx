@@ -33,7 +33,7 @@ const InfoCard = () => {
     <div className="InfoCard">
       <div className="infoHead">
         <h4>Profile Info</h4>
-        {user._id === profileUserId ? (        <div>
+        {user._id === profileUserId ? (<div>
           <UilPen
             width="2rem"
             height="1.2rem"
