@@ -5,15 +5,16 @@ import Profile from "./pages/Profile/Profile";
 import {Routes, Route, Navigate} from 'react-router-dom'
 import { useSelector } from "react-redux";
 import {useEffect} from 'react'
-import { useLocation } from 'react-router-dom'
+// import { useLocation } from 'react-router-dom'
 function App() {
   //log the path
-  // useEffect(() => {
-  //   document.title = 'Social Media App'
-  // })
+
   // const location = useLocation();
   // console.log(location.pathname);
 
+  useEffect(() => {
+    document.title = 'Social Media App'
+  })
 
   const user = useSelector((state) => state.authReducer.authData)
   return (
