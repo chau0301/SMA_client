@@ -8,24 +8,64 @@ const Auth = () => {
   const dispatch = useDispatch()
   const loading = useSelector((state) => state.authReducer.loading)
   const [isSignUp, setIsSignUp] = useState(false)
+  let status = ""
+  const [message, setMessage] = useState("")
   const [data, setData] = useState({firstname: "", lastname: "", username: "", password: "", confirmpass: ""})
   const handleChange = (event) => {
     setData({...data, [event.target.name]: event.target.value})
   }
   const [confirmPass, setConfirmPass] = useState(true)
+  const passwordStatus = (pass, confirmPass) => {
+    const minLength = 8
+    const maxLength = 32
+    const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/
+    if (pass.length < minLength) return "TOO_SHORT"
+    else if (pass.length > maxLength) return "TOO_LONG"
+    else if (pass.indexOf(' ') !== -1) return "INCLUDE_SPACE"
+    else if (pass.match(pattern) === null) return "NOT_VALID"
+    else if (confirmPass !== pass) return "NOT_MATCH" 
+    return "VALID" 
+  }
+  const passwordMessage = (status) => {
+    switch (status) {
+      case "TOO_SHORT":
+        return "PASSWORD MUST AT LEAST 8 CHARACTERS"
+      case "TOO_LONG":
+        return "PASSWORD MAXIMUM 32 CHARACTERS"
+      case "INCLUDE_SPACE":
+        return "PASSWORD MUST NOT HAVE SPACE"
+      case "NOT_VALID":
+        return "Password must includes uppercase letter, number, symbol"
+      case "NOT_MATCH":
+        return "CONFIRM PASSWORD IS NOT MATCH"
+      default:
+        return "VALID"
+    }
+  }
   const handleSubmit = (event) => {
     event.preventDefault()
     if (isSignUp) {
-      data.confirmpass === data.password ? dispatch(signUp(data)) : setConfirmPass(false)
+      status = (passwordStatus(data.password, data.confirmpass))
+      console.log(status)
+      if (status === "VALID") {
+          dispatch(signUp(data))
+          console.log("POSTED")
+      } else {
+        setConfirmPass(false)
+        setMessage(passwordMessage(status))
+        console.log("MESSAGE: ", message, " from status:", status)
+      }
     }
     else {
       dispatch(logIn(data))
     }
   }
+
   const resetForm = () =>  {
     setConfirmPass(true)
     setData({firstname: "", lastname: "", username: "", password: "", confirmpass: ""})
   }
+  
   return (
     <div className="Auth">
       <div className="a-left">
@@ -91,8 +131,11 @@ const Auth = () => {
             value= {data.confirmpass}
           />) : ("")}
         </div>
-        {isSignUp ? (<span style={{display: confirmPass ? "none" : "block", color: 'red', fontSize: '12px', alignSelf: "flex-end",marginRight: "5px"}}>*Confirm Password is not same</span>)
-        : ""}
+
+        {(isSignUp && !confirmPass)
+          ? (<span className="passFail">*{message}</span>)
+          : ""
+        }
 
         <div>
             <span class="span-change" onClick={() => {

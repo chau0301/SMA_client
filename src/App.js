@@ -15,7 +15,6 @@ function App() {
   useEffect(() => {
     document.title = 'Social Media App'
   })
-
   const user = useSelector((state) => state.authReducer.authData)
   return (
     <div className="App">

@@ -102,3 +102,13 @@
     color: orange;
     transition: 0.3s;
   }
+  .passFail {
+    display: block;
+    color: red;
+    font-size: 12px;
+    align-self: flex-end;
+    margin-right: 5px;
+  }
+  .passValid {
+    display: none;
+  }
