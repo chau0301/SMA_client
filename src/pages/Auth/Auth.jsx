@@ -1,12 +1,12 @@
 import React, {useState} from "react";
 import "./Auth.css";
 import {useDispatch, useSelector} from 'react-redux'
-import { logIn, signUp } from "../../actions/AuthAction";
-
+import { logIn, signUp, logOut } from "../../actions/AuthAction";
 
 const Auth = () => {
   const dispatch = useDispatch()
   const loading = useSelector((state) => state.authReducer.loading)
+  const errorLogin = useSelector((state) => state.authReducer.error)
   const [isSignUp, setIsSignUp] = useState(false)
   let status = ""
   const [message, setMessage] = useState("")
@@ -18,7 +18,7 @@ const Auth = () => {
   const passwordStatus = (pass, confirmPass) => {
     const minLength = 8
     const maxLength = 32
-    const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/
+    const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,32}$/
     if (pass.length < minLength) return "TOO_SHORT"
     else if (pass.length > maxLength) return "TOO_LONG"
     else if (pass.indexOf(' ') !== -1) return "INCLUDE_SPACE"
@@ -46,14 +46,11 @@ const Auth = () => {
     event.preventDefault()
     if (isSignUp) {
       status = (passwordStatus(data.password, data.confirmpass))
-      console.log(status)
       if (status === "VALID") {
           dispatch(signUp(data))
-          console.log("POSTED")
       } else {
         setConfirmPass(false)
         setMessage(passwordMessage(status))
-        console.log("MESSAGE: ", message, " from status:", status)
       }
     }
     else {
@@ -64,6 +61,12 @@ const Auth = () => {
   const resetForm = () =>  {
     setConfirmPass(true)
     setData({firstname: "", lastname: "", username: "", password: "", confirmpass: ""})
+  }
+
+  window.onbeforeunload = () => {
+    if (errorLogin) {
+      dispatch(logOut())
+    }
   }
   
   return (
@@ -131,14 +134,15 @@ const Auth = () => {
             value= {data.confirmpass}
           />) : ("")}
         </div>
-
+        {(!isSignUp && errorLogin) && (<span className="passFail">*Username/password is incorrect</span>)}
+        
         {(isSignUp && !confirmPass)
           ? (<span className="passFail">*{message}</span>)
           : ""
         }
 
         <div>
-            <span class="span-change" onClick={() => {
+            <span className="span-change" onClick={() => {
               resetForm()
               setIsSignUp((prev) => !prev)
               }}>
