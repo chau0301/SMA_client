@@ -12,17 +12,25 @@ const Auth = () => {
   const [message, setMessage] = useState("")
   const [data, setData] = useState({firstname: "", lastname: "", username: "", password: "", confirmpass: ""})
   const handleChange = (event) => {
-    setData({...data, [event.target.name]: event.target.value})
+    if (event.target.name === 'firstname' || event.target.name === 'lastname') {
+      setData({...data, [event.target.name]: event.target.value}) 
+    }
+    else {
+      setData({...data, [event.target.name]: event.target.value.trim()}) 
+    }
   }
+  
   const [confirmPass, setConfirmPass] = useState(true)
-  const passwordStatus = (pass, confirmPass) => {
+  const passwordStatus = (pass, confirmPass, username) => {
     const minLength = 8
     const maxLength = 32
-    const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,32}$/
-    if (pass.length < minLength) return "TOO_SHORT"
+    const patternPass = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,32}$/
+    const patternUsername = /^[a-z0-9_-]{2,32}$/
+    if (username.match(patternUsername) === null) return "USERNAME_NOT_VALID"
+    else if (pass.length < minLength) return "TOO_SHORT"
     else if (pass.length > maxLength) return "TOO_LONG"
     else if (pass.indexOf(' ') !== -1) return "INCLUDE_SPACE"
-    else if (pass.match(pattern) === null) return "NOT_VALID"
+    else if (pass.match(patternPass) === null) return "NOT_VALID"
     else if (confirmPass !== pass) return "NOT_MATCH" 
     return "VALID" 
   }
@@ -38,6 +46,8 @@ const Auth = () => {
         return "Password must includes uppercase letter, number, symbol"
       case "NOT_MATCH":
         return "CONFIRM PASSWORD IS NOT MATCH"
+      case "USERNAME_NOT_VALID":
+        return "USERNAME IS NOT VALID"
       default:
         return "VALID"
     }
@@ -45,7 +55,7 @@ const Auth = () => {
   const handleSubmit = (event) => {
     event.preventDefault()
     if (isSignUp) {
-      status = (passwordStatus(data.password, data.confirmpass))
+      status = (passwordStatus(data.password, data.confirmpass, data.username))
       if (status === "VALID") {
           dispatch(signUp(data))
       } else {
